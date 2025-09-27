@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nech mě růst - Přispět kryptem</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .crypto-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .crypto-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 2rem;
+            max-width: 320px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            transition: box-shadow 0.2s;
+        }
+        .crypto-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .crypto-logo {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+        .crypto-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            margin: 1rem auto;
+            background: #eee;
+            border-radius: 8px;
+            display: block;
+        }
+        .crypto-buttons {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background: #2d5a3d;
+            color: #fff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #1e3a28;
+        }
+        .btn-pi {
+            background: #e5c100;
+            color: #333;
+        }
+        .btn-pi:hover {
+            background: #cbb100;
+        }
+        .crypto-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .crypto-main {
+            padding: 100px 0;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.png" alt="Nech mě růst" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link" data-cs="Domů" data-en="Home">Domů</a>
+                </li>
+                <li class="nav-item">
+                    <a href="zvireci-obyvatele.html" class="nav-link" data-cs="Zvířecí obyvatelé" data-en="Animal Residents">Zvířecí obyvatelé</a>
+                </li>
+                <li class="nav-item">
+                    <a href="virtualni-adopce.html" class="nav-link" data-cs="Virtuální adopce" data-en="Virtual Adoption">Virtuální adopce</a>
+                </li>
+                <li class="nav-item">
+                    <a href="udalosti.html" class="nav-link" data-cs="Události" data-en="Events">Události</a>
+                </li>
+                <li class="nav-item">
+                    <a href="kontakt.html" class="nav-link" data-cs="Kontakt" data-en="Contact">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <a href="prispet-kryptem.html" class="nav-link active" data-cs="Přispět kryptem" data-en="Donate with Crypto">Přispět kryptem</a>
+                </li>
+                <li class="nav-item language-switcher">
+                    <button id="lang-toggle" class="lang-btn">
+                        <span class="lang-text">EN</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="hero-content">
+            <h1 class="page-title" data-cs="Přispět kryptoměnou" data-en="Donate with Cryptocurrency">Přispět kryptoměnou</h1>
+            <p class="page-description" data-cs="Podpořte nás libovolnou z těchto kryptoměn. Pro více informací klikněte na tlačítko „Více"." data-en="Support us with any of these cryptocurrencies. For more information, click the 'More' button.">
+                Podpořte nás libovolnou z těchto kryptoměn. Pro více informací klikněte na tlačítko „Více".
+            </p>
+        </div>
+        <div class="hero-image">
+            <img data-src="assets/hero-image.jpg" alt="Přispět kryptem" class="hero-bg" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Crypto Section -->
+    <section class="crypto-main">
+        <div class="container">
+            <div class="crypto-container">
+                <!-- Bitcoin -->
+                <div class="crypto-card">
+                    <img data-src="assets/bitcoin-logo.png" alt="Bitcoin logo" class="crypto-logo" loading="lazy">
+                    <div class="crypto-name">Bitcoin (BTC)</div>
+                    <img data-src="assets/btc-qr.png" alt="QR Bitcoin" class="qr-code" loading="lazy">
+                    <div class="crypto-buttons">
+                        <button class="btn" onclick="showInfo('btc')" data-cs="Více" data-en="More">Více</button>
+                    </div>
+                    <div id="info-btc" class="crypto-info" style="display:none;">
+                        <p data-cs="Bitcoin je první a nejznámější kryptoměna. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>" data-en="Bitcoin is the first and most well-known cryptocurrency. Donation address: <strong>add_address_here</strong>">
+                            Bitcoin je první a nejznámější kryptoměna. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ethereum -->
+                <div class="crypto-card">
+                    <img data-src="assets/ethereum-logo.png" alt="Ethereum logo" class="crypto-logo" loading="lazy">
+                    <div class="crypto-name">Ethereum (ETH)</div>
+                    <img data-src="assets/eth-qr.png" alt="QR Ethereum" class="qr-code" loading="lazy">
+                    <div class="crypto-buttons">
+                        <button class="btn" onclick="showInfo('eth')" data-cs="Více" data-en="More">Více</button>
+                    </div>
+                    <div id="info-eth" class="crypto-info" style="display:none;">
+                        <p data-cs="Ethereum je druhá nejrozšířenější kryptoměna. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>" data-en="Ethereum is the second most widespread cryptocurrency. Donation address: <strong>add_address_here</strong>">
+                            Ethereum je druhá nejrozšířenější kryptoměna. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cardano -->
+                <div class="crypto-card">
+                    <img data-src="assets/cardano-logo.png" alt="Cardano logo" class="crypto-logo" loading="lazy">
+                    <div class="crypto-name">Cardano (ADA)</div>
+                    <img data-src="assets/ada-qr.png" alt="QR Cardano" class="qr-code" loading="lazy">
+                    <div class="crypto-buttons">
+                        <button class="btn" onclick="showInfo('ada')" data-cs="Více" data-en="More">Více</button>
+                    </div>
+                    <div id="info-ada" class="crypto-info" style="display:none;">
+                        <p data-cs="Cardano je moderní proof-of-stake blockchain. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>" data-en="Cardano is a modern proof-of-stake blockchain. Donation address: <strong>add_address_here</strong>">
+                            Cardano je moderní proof-of-stake blockchain. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Binance Coin -->
+                <div class="crypto-card">
+                    <img data-src="assets/bnb-logo.png" alt="Binance logo" class="crypto-logo" loading="lazy">
+                    <div class="crypto-name">Binance Coin (BNB)</div>
+                    <img data-src="assets/bnb-qr.png" alt="QR Binance" class="qr-code" loading="lazy">
+                    <div class="crypto-buttons">
+                        <button class="btn" onclick="showInfo('bnb')" data-cs="Více" data-en="More">Více</button>
+                    </div>
+                    <div id="info-bnb" class="crypto-info" style="display:none;">
+                        <p data-cs="Binance Coin je kryptoměna burzy Binance. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>" data-en="Binance Coin is the cryptocurrency of Binance exchange. Donation address: <strong>add_address_here</strong>">
+                            Binance Coin je kryptoměna burzy Binance. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pi Network -->
+                <div class="crypto-card">
+                    <img data-src="assets/pi-logo.png" alt="Pi Network logo" class="crypto-logo" loading="lazy">
+                    <div class="crypto-name">Pi Network (Pi)</div>
+                    <img data-src="assets/pi-qr.png" alt="QR Pi Network" class="qr-code" loading="lazy">
+                    <div class="crypto-buttons">
+                        <button class="btn" onclick="showInfo('pi')" data-cs="Více" data-en="More">Více</button>
+                        <a href="https://minepi.com/vaš_odkaz" target="_blank" class="btn btn-pi" data-cs="Těžit Pi" data-en="Mine Pi">Těžit Pi</a>
+                    </div>
+                    <div id="info-pi" class="crypto-info" style="display:none;">
+                        <p data-cs="Pi Network je mobilní kryptoměna. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>" data-en="Pi Network is a mobile cryptocurrency. Donation address: <strong>add_address_here</strong>">
+                            Pi Network je mobilní kryptoměna. Adresa pro příspěvek: <strong>zde_doplňte_adresu</strong>
+                        </p>
+                        <p data-cs="Chcete-li těžit Pi, použijte odkaz výše." data-en="To mine Pi, use the link above.">
+                            Chcete-li těžit Pi, použijte odkaz výše.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title" data-cs="Kontaktujte nás" data-en="Contact Us">Kontaktujte nás</h2>
+            <div class="contact-info">
+                <div class="contact-address">
+                    <h3 data-cs="Adresa" data-en="Address">Adresa</h3>
+                    <p>Nová ves u Leštiny 32<br>582 82 Česká Republika</p>
+                </div>
+                <div class="contact-text">
+                    <p data-cs="Plánujete návštěvu? Rádi vítáme návštěvníky na naší Louce! Kontaktujte nás prosím alespoň 48 hodin předem a domluvte si termín návštěvy. Pomůže nám to zajistit, aby se zvířata cítila dobře a abychom vám mohli poskytnout co nejlepší zážitek." data-en="Planning a visit? We welcome visitors to our Meadow! Please contact us at least 48 hours in advance to arrange a visit. This will help us ensure that the animals feel comfortable and that we can provide you with the best possible experience.">
+                        Plánujete návštěvu? Rádi vítáme návštěvníky na naší Louce! Kontaktujte nás prosím alespoň 48 hodin předem a domluvte si termín návštěvy. Pomůže nám to zajistit, aby se zvířata cítila dobře a abychom vám mohli poskytnout co nejlepší zážitek.
+                    </p>
+                </div>
+            </div>
+            <div class="social-media">
+                <a href="https://www.instagram.com/nech_me_rust" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1BDFbAxfFf/" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="mailto:info@nechmerust.org" class="social-link"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-cs="© 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům." data-en="© 2025 Nech mě růst z.s. All rights reserved. • Written with love for nature and animals.">
+                © 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function showInfo(crypto) {
+            const info = document.getElementById('info-' + crypto);
+            if (info.style.display === 'none') {
+                info.style.display = 'block';
+            } else {
+                info.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+

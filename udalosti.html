@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nech mě růst - Události</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.png" alt="Nech mě růst" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link" data-cs="Domů" data-en="Home">Domů</a>
+                </li>
+                <li class="nav-item">
+                    <a href="zvireci-obyvatele.html" class="nav-link" data-cs="Zvířecí obyvatelé" data-en="Animal Residents">Zvířecí obyvatelé</a>
+                </li>
+                <li class="nav-item">
+                    <a href="virtualni-adopce.html" class="nav-link" data-cs="Virtuální adopce" data-en="Virtual Adoption">Virtuální adopce</a>
+                </li>
+                <li class="nav-item">
+                    <a href="udalosti.html" class="nav-link active" data-cs="Události" data-en="Events">Události</a>
+                </li>
+                <li class="nav-item">
+                    <a href="kontakt.html" class="nav-link" data-cs="Kontakt" data-en="Contact">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <a href="prispet-kryptem.html" class="nav-link" data-cs="Přispět kryptem" data-en="Donate with Crypto">Přispět kryptem</a>
+                </li>
+                <li class="nav-item language-switcher">
+                    <button id="lang-toggle" class="lang-btn">
+                        <span class="lang-text">EN</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero events-hero">
+        <div class="hero-content">
+            <h1 class="page-title" data-cs="Události" data-en="Events">Události</h1>
+            <p class="page-description" data-cs="Zúčastněte se některé z událostí a poznejte život na Louce" data-en="Attend one of our events and experience our way of life">Zúčastněte se některé z událostí a poznejte život na Louce</p>
+        </div>
+        <div class="hero-image">
+            <img data-src="assets/hero-image.jpg" alt="Události" class="hero-bg" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="upcoming-events">
+        <div class="container">
+            <h2 class="section-title" data-cs="Nadcházející události" data-en="Upcoming Events">Nadcházející události</h2>
+            
+            <div class="events-grid" id="events-list">
+                <!-- Sample Events - In real implementation, these would be loaded from Google Calendar API -->
+                <div class="event-card">
+                    <div class="event-date">
+                        <div class="event-day">2</div>
+                        <div class="event-month" data-cs="Listopad" data-en="November">Listopad</div>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title" data-cs="Společná procházka" data-en="walking with animals">Společná procházka</h3>
+                        <p class="event-time">
+                            <i class="fas fa-clock"></i>
+                            <span>10:00 - 18:00</span>
+                        </p>
+                        <p class="event-description" data-cs="Přijďte se podívat na naši Louky, poznat zvířata a dozvědět se více o našem způsobu života." data-en="Come visit our Meadow, meet the animals and learn more about our way of life.">
+                            Přijďte se podívat na naši Louku, poznat zvířata a dozvědět se více o našem způsobu života.
+                        </p>
+                        <div class="event-capacity">
+                            <i class="fas fa-users"></i>
+                            <span data-cs="Volných míst: 20/20" data-en="Available spots: 20/20">Volných míst: 20/20</span>
+                        </div>
+                        <button class="register-btn" onclick="openRegistrationModal('den-otevrenych-dveri')" data-cs="Registrovat se" data-en="Register">
+                            Registrovat se
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <h2 class="section-title" data-cs="Kontaktujte nás" data-en="Contact Us">Kontaktujte nás</h2>
+            <div class="contact-info">
+                <div class="contact-address">
+                    <h3 data-cs="Adresa" data-en="Address">Adresa</h3>
+                    <p>Nová ves u Leštiny 32<br>582 82 Česká Republika</p>
+                </div>
+                <div class="contact-text">
+                    <p data-cs="Plánujete návštěvu? Rádi vítáme návštěvníky na naší Louce! Kontaktujte nás prosím alespoň 48 hodin předem a domluvte si termín návštěvy. Pomůže nám to zajistit, aby se zvířata cítila dobře a abychom vám mohli poskytnout co nejlepší zážitek." data-en="Planning a visit? We welcome visitors to our Meadow! Please contact us at least 48 hours in advance to arrange a visit. This will help us ensure that the animals feel comfortable and that we can provide you with the best possible experience.">
+                        Plánujete návštěvu? Rádi vítáme návštěvníky na naší Louce! Kontaktujte nás prosím alespoň 48 hodin předem a domluvte si termín návštěvy. Pomůže nám to zajistit, aby se zvířata cítila dobře a abychom vám mohli poskytnout co nejlepší zážitek.
+                    </p>
+                </div>
+            </div>
+            <div class="social-media">
+                <a href="https://www.instagram.com/nech_me_rust" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1BDFbAxfFf/" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="mailto:info@nechmerust.org" class="social-link"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-cs="© 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům." data-en="© 2025 Nech mě růst z.s. All rights reserved. • Written with love for nature and animals.">
+                © 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

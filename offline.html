@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Nech mě růst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .offline-container {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .retry-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .cached-pages {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .cached-pages h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .cached-pages ul {
+            list-style: none;
+        }
+        
+        .cached-pages li {
+            margin-bottom: 8px;
+        }
+        
+        .cached-pages a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: block;
+            transition: background 0.3s ease;
+        }
+        
+        .cached-pages a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">🌱</div>
+        <h1>Jste offline</h1>
+        <p>Zdá se, že nemáte připojení k internetu. Některé stránky jsou však dostupné offline díky cache.</p>
+        
+        <button class="retry-btn" onclick="window.location.reload()">
+            Zkusit znovu
+        </button>
+        
+        <div class="cached-pages">
+            <h3>Dostupné stránky offline:</h3>
+            <ul>
+                <li><a href="index.html">🏠 Domů</a></li>
+                <li><a href="zvireci-obyvatele.html">🐾 Zvířecí obyvatelé</a></li>
+                <li><a href="virtualni-adopce.html">❤️ Virtuální adopce</a></li>
+                <li><a href="udalosti.html">📅 Události</a></li>
+                <li><a href="kontakt.html">📞 Kontakt</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Check for connection and auto-reload when back online
+        window.addEventListener('online', () => {
+            window.location.reload();
+        });
+        
+        // Show connection status
+        if (navigator.onLine) {
+            document.querySelector('p').textContent = 'Připojení bylo obnoveno! Stránka se automaticky načte.';
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+

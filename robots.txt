@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nechmerust.org/sitemap.xml
+
+# Blokování citlivých souborů
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /sw.js
+
