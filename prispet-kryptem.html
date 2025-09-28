@@ -33,6 +33,10 @@
             width: 64px;
             height: 64px;
             margin-bottom: 1rem;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         .crypto-name {
             font-size: 1.25rem;
@@ -78,14 +82,88 @@
         }
         .crypto-info {
             margin-top: 1rem;
-            padding: 1rem;
+            padding: 1.5rem;
             background: #f8f9fa;
-            border-radius: 8px;
+            border-radius: 12px;
             text-align: left;
+            border: 1px solid #e9ecef;
+        }
+        .crypto-info p {
+            margin: 0 0 1rem 0;
+            line-height: 1.6;
+        }
+        .crypto-info p:last-child {
+            margin-bottom: 0;
+        }
+        .address-container {
+            background: #fff;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+        .address-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .address-text {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #212529;
+            word-break: break-all;
+            line-height: 1.4;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .address-text:hover {
+            background: #e9ecef;
+        }
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #2d5a3d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .copy-button:hover {
+            background: #1e3a28;
+        }
+        .copy-button.copied {
+            background: #28a745;
         }
         .crypto-main {
             padding: 100px 0;
             background: white;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
@@ -155,9 +233,14 @@
                         <button class="btn" onclick="showInfo('btc')" data-cs="Více" data-en="More">Více</button>
                     </div>
                     <div id="info-btc" class="crypto-info" style="display:none;">
-                        <p data-cs="Bitcoin je první a nejznámější kryptoměna. Adresa pro příspěvek: <strong>bc1qe2hae5fq447rw095krcwwmamwrwy0plkkrw8as</strong>" data-en="Bitcoin is the first and most well-known cryptocurrency. Donation address: <strong>bc1qe2hae5fq447rw095krcwwmamwrwy0plkkrw8as</strong>">
-                            Bitcoin je první a nejznámější kryptoměna. Adresa pro příspěvek: <strong>bc1qe2hae5fq447rw095krcwwmamwrwy0plkkrw8as</strong>
+                        <p data-cs="Bitcoin je první a nejznámější kryptoměna." data-en="Bitcoin is the first and most well-known cryptocurrency.">
+                            Bitcoin je první a nejznámější kryptoměna.
                         </p>
+                        <div class="address-container">
+                            <div class="address-label" data-cs="Adresa pro příspěvek:" data-en="Donation address:">Adresa pro příspěvek:</div>
+                            <div class="address-text" onclick="copyToClipboard('bc1qe2hae5fq447rw095krcwwmamwrwy0plkkrw8as', this)">bc1qe2hae5fq447rw095krcwwmamwrwy0plkkrw8as</div>
+                            <button class="copy-button" onclick="copyToClipboard('bc1qe2hae5fq447rw095krcwwmamwrwy0plkkrw8as', this)" data-cs="Kopírovat" data-en="Copy">Kopírovat</button>
+                        </div>
                     </div>
                 </div>
 
@@ -170,11 +253,14 @@
                         <button class="btn" onclick="showInfo('eth')" data-cs="Více" data-en="More">Více</button>
                     </div>
                     <div id="info-eth" class="crypto-info" style="display:none;">
-                        <p data-cs="Ethereum je druhá nejrozšířenější kryptoměna. Adresa pro příspěvek: <strong>0x13ACe35dac602401da21F36348Dcf37b7Fef5389</strong>" data-en="Ethereum is the second most widespread cryptocurrency. Donation address: <strong>0x13ACe35dac602401da21F36348Dcf37b7Fef5389</strong>">
-                            Ethereum je druhá nejrozšířenější kryptoměna. Adresa pro příspěvek: <strong> 0x13ACe35dac602401da21F36348Dcf37b7Fef5389 
-
-</strong>
+                        <p data-cs="Ethereum je druhá nejrozšířenější kryptoměna." data-en="Ethereum is the second most widespread cryptocurrency.">
+                            Ethereum je druhá nejrozšířenější kryptoměna.
                         </p>
+                        <div class="address-container">
+                            <div class="address-label" data-cs="Adresa pro příspěvek:" data-en="Donation address:">Adresa pro příspěvek:</div>
+                            <div class="address-text" onclick="copyToClipboard('0x13ACe35dac602401da21F36348Dcf37b7Fef5389', this)">0x13ACe35dac602401da21F36348Dcf37b7Fef5389</div>
+                            <button class="copy-button" onclick="copyToClipboard('0x13ACe35dac602401da21F36348Dcf37b7Fef5389', this)" data-cs="Kopírovat" data-en="Copy">Kopírovat</button>
+                        </div>
                     </div>
                 </div>
 
@@ -187,10 +273,14 @@
                         <button class="btn" onclick="showInfo('ada')" data-cs="Více" data-en="More">Více</button>
                     </div>
                     <div id="info-ada" class="crypto-info" style="display:none;">
-                        <p data-cs="Cardano je moderní proof-of-stake blockchain. Adresa pro příspěvek: <strong>addr1qx868v7umt2da0td3l7nsa990fwag37lllt82m4espzmnczscqvg9wk7adqdma8zcw60x2ru5uck9t0hr5far84c654sn4jxn4</strong>" data-en="Cardano is a modern proof-of-stake blockchain. Donation address: <strong>addr1qx868v7umt2da0td3l7nsa990fwag37lllt82m4espzmnczscqvg9wk7adqdma8zcw60x2ru5uck9t0hr5far84c654sn4jxn4</strong>">
-                            Cardano je moderní proof-of-stake blockchain. Adresa pro příspěvek: <strong>addr1qx868v7umt2da0td3l7nsa990fwag37lllt82m4espzmnczscqvg9wk7adqdma8zcw60x2ru5uck9t0hr5far84c654sn4jxn4
-</strong>
+                        <p data-cs="Cardano je moderní proof-of-stake blockchain." data-en="Cardano is a modern proof-of-stake blockchain.">
+                            Cardano je moderní proof-of-stake blockchain.
                         </p>
+                        <div class="address-container">
+                            <div class="address-label" data-cs="Adresa pro příspěvek:" data-en="Donation address:">Adresa pro příspěvek:</div>
+                            <div class="address-text" onclick="copyToClipboard('addr1qx868v7umt2da0td3l7nsa990fwag37lllt82m4espzmnczscqvg9wk7adqdma8zcw60x2ru5uck9t0hr5far84c654sn4jxn4', this)">addr1qx868v7umt2da0td3l7nsa990fwag37lllt82m4espzmnczscqvg9wk7adqdma8zcw60x2ru5uck9t0hr5far84c654sn4jxn4</div>
+                            <button class="copy-button" onclick="copyToClipboard('addr1qx868v7umt2da0td3l7nsa990fwag37lllt82m4espzmnczscqvg9wk7adqdma8zcw60x2ru5uck9t0hr5far84c654sn4jxn4', this)" data-cs="Kopírovat" data-en="Copy">Kopírovat</button>
+                        </div>
                     </div>
                 </div>
 
@@ -203,11 +293,14 @@
                         <button class="btn" onclick="showInfo('bnb')" data-cs="Více" data-en="More">Více</button>
                     </div>
                     <div id="info-bnb" class="crypto-info" style="display:none;">
-                        <p data-cs="Binance Coin je kryptoměna burzy Binance. Adresa pro příspěvek: <strong>0x13ACe35dac602401da21F36348Dcf37b7Fef5389</strong>" data-en="Binance Coin is the cryptocurrency of Binance exchange. Donation address: <strong>0x13ACe35dac602401da21F36348Dcf37b7Fef5389</strong>">
-                            Binance Coin je kryptoměna burzy Binance. Adresa pro příspěvek: <strong>0x13ACe35dac602401da21F36348Dcf37b7Fef5389
-
-</strong>
+                        <p data-cs="Binance Coin je kryptoměna burzy Binance." data-en="Binance Coin is the cryptocurrency of Binance exchange.">
+                            Binance Coin je kryptoměna burzy Binance.
                         </p>
+                        <div class="address-container">
+                            <div class="address-label" data-cs="Adresa pro příspěvek:" data-en="Donation address:">Adresa pro příspěvek:</div>
+                            <div class="address-text" onclick="copyToClipboard('0x13ACe35dac602401da21F36348Dcf37b7Fef5389', this)">0x13ACe35dac602401da21F36348Dcf37b7Fef5389</div>
+                            <button class="copy-button" onclick="copyToClipboard('0x13ACe35dac602401da21F36348Dcf37b7Fef5389', this)" data-cs="Kopírovat" data-en="Copy">Kopírovat</button>
+                        </div>
                     </div>
                 </div>
 
@@ -221,9 +314,14 @@
                         <a href="https://minepi.com/bhaktidas108" target="_blank" class="btn btn-pi" data-cs="Těžit Pi" data-en="Mine Pi">Těžit Pi</a>
                     </div>
                     <div id="info-pi" class="crypto-info" style="display:none;">
-                        <p data-cs="Pi Network je mobilní kryptoměna. Adresa pro příspěvek: <strong>GDFQXJ2VMVH6MAJMZHJG4W57WHEZ26HFC42NHAVV4W7H56SEUVDAZMM6</strong>" data-en="Pi Network is a mobile cryptocurrency. Donation address: <strong>GDFQXJ2VMVH6MAJMZHJG4W57WHEZ26HFC42NHAVV4W7H56SEUVDAZMM6</strong>">
-                            Pi Network je mobilní kryptoměna. Adresa pro příspěvek: <strong>GDFQXJ2VMVH6MAJMZHJG4W57WHEZ26HFC42NHAVV4W7H56SEUVDAZMM6</strong>
+                        <p data-cs="Pi Network je mobilní kryptoměna." data-en="Pi Network is a mobile cryptocurrency.">
+                            Pi Network je mobilní kryptoměna.
                         </p>
+                        <div class="address-container">
+                            <div class="address-label" data-cs="Adresa pro příspěvek:" data-en="Donation address:">Adresa pro příspěvek:</div>
+                            <div class="address-text" onclick="copyToClipboard('GDFQXJ2VMVH6MAJMZHJG4W57WHEZ26HFC42NHAVV4W7H56SEUVDAZMM6', this)">GDFQXJ2VMVH6MAJMZHJG4W57WHEZ26HFC42NHAVV4W7H56SEUVDAZMM6</div>
+                            <button class="copy-button" onclick="copyToClipboard('GDFQXJ2VMVH6MAJMZHJG4W57WHEZ26HFC42NHAVV4W7H56SEUVDAZMM6', this)" data-cs="Kopírovat" data-en="Copy">Kopírovat</button>
+                        </div>
                         <p data-cs="Chcete-li těžit Pi, použijte odkaz výše." data-en="To mine Pi, use the link above.">
                             Chcete-li těžit Pi, použijte odkaz výše.
                         </p>
@@ -262,6 +360,11 @@
         </div>
     </footer>
 
+    <!-- Toast notification -->
+    <div id="toast" class="toast">
+        <span data-cs="Adresa zkopírována do schránky!" data-en="Address copied to clipboard!">Adresa zkopírována do schránky!</span>
+    </div>
+
     <script src="script.js"></script>
     <script>
         function showInfo(crypto) {
@@ -272,6 +375,61 @@
                 info.style.display = 'none';
             }
         }
+
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Show toast notification
+                showToast();
+                
+                // Visual feedback on button
+                if (element.classList.contains('copy-button')) {
+                    const originalText = element.textContent;
+                    element.textContent = 'Zkopírováno!';
+                    element.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        element.textContent = originalText;
+                        element.classList.remove('copied');
+                    }, 2000);
+                }
+            }).catch(function(err) {
+                console.error('Chyba při kopírování: ', err);
+                // Fallback for older browsers
+                fallbackCopyTextToClipboard(text);
+            });
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast();
+                }
+            } catch (err) {
+                console.error('Fallback: Chyba při kopírování', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
     </script>
 </body>
-                      </html>
+                        </html>
