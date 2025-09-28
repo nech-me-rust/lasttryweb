@@ -3,98 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nech mě růst - Domů</title>
+    <title>Nechť mě Roste</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    .value-icon i {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="assets/logo.png" alt="Nech mě růst" class="logo">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="./img/logo.png" alt="Nechť mě Roste Logo">
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link active" data-cs="Domů" data-en="Home">Domů</a>
-                </li>
-                <li class="nav-item">
-                    <a href="zvireci-obyvatele.html" class="nav-link" data-cs="Zvířecí obyvatelé" data-en="Animal Residents">Zvířecí obyvatelé</a>
-                </li>
-                <li class="nav-item">
-                    <a href="virtualni-adopce.html" class="nav-link" data-cs="Virtuální adopce" data-en="Virtual Adoption">Virtuální adopce</a>
-                </li>
-                <li class="nav-item">
-                    <a href="udalosti.html" class="nav-link" data-cs="Události" data-en="Events">Události</a>
-                </li>
-                <li class="nav-item">
-                    <a href="kontakt.html" class="nav-link" data-cs="Kontakt" data-en="Contact">Kontakt</a>
-                </li>
-                <li class="nav-item">
-                    <a href="prispet-kryptem.html" class="nav-link" data-cs="Přispět kryptem" data-en="Donate with Crypto">Přispět kryptem</a>
-                </li>
-                <li class="nav-item language-switcher">
-                    <button id="lang-toggle" class="lang-btn">
-                        <span class="lang-text">EN</span>
-                    </button>
-                </li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home" data-cs="Domů" data-en="Home">Domů</a></li>
+                    <li><a href="#about" data-cs="O nás" data-en="About">O nás</a></li>
+                    <li><a href="#values" data-cs="Hodnoty" data-en="Values">Hodnoty</a></li>
+                    <li><a href="#projects" data-cs="Projekty" data-en="Projects">Projekty</a></li>
+                    <li><a href="#contact" data-cs="Kontakt" data-en="Contact">Kontakt</a></li>
+                </ul>
+            </nav>
+            <div class="lang-switcher">
+                <button class="lang-button active" data-lang="cs">CS</button>
+                <button class="lang-button" data-lang="en">EN</button>
             </div>
+            <button class="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title" data-cs="Tvoříme prostor pro růst duše, srdce i přírody" data-en="Creating space for the growth of soul, heart and nature">
-                    Tvoříme prostor pro růst duše, srdce i přírody
-                </h1>
-                <p class="hero-description" data-cs="Nech Mě Růst z.s. je nezisková organizace s vizí tvorby rodového statku, kde žijeme v harmonii s přírodou, zvířaty i sebou navzájem." data-en="Let Me Grow is a non-profit organization with a vision of creating a family estate where we live in harmony with nature, animals and each other.">
-                    Nech Mě Růst z.s. je nezisková organizace s vizí tvorby rodového statku, kde žijeme v harmonii s přírodou, zvířaty i sebou navzájem.
-                </p>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-cs="Vítejte na Louce, kde se sny stávají skutečností" data-en="Welcome to the Meadow, where dreams come true">Vítejte na Louce, kde se sny stávají skutečností</h1>
+                <p data-cs="Místo, kde se snoubí láska ke zvířatům, soběstačnost a harmonie s přírodou." data-en="A place where love for animals, self-sufficiency, and harmony with nature intertwine.">Místo, kde se snoubí láska ke zvířatům, soběstačnost a harmonie s přírodou.</p>
+                <a href="#about" class="btn" data-cs="Zjistěte více" data-en="Learn More">Zjistěte více</a>
             </div>
-            <div class="hero-logo">
-                <div class="logo-circle">
-                    <img src="assets/logo-circle.png" alt="Nech mě růst logo" class="circle-logo">
-                </div>
-            </div>
-        </div>
-        <div class="hero-image">
-            <img data-src="assets/hero-image.jpg" alt="Lidé se zvířaty na louce" class="hero-bg" loading="lazy">
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="about">
+    <section class="about" id="about">
         <div class="container">
-            <h2 class="section-title" data-cs="O projektu" data-en="About the Project">O projektu</h2>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p data-cs="Na Louce žijí zvířata, která jsme přijali do péče, a která u nás nacházejí bezpečný domov, dostatek krmiva a čisté, teplé místo k odpočinku. Každé zvíře má svůj příběh a my se snažíme zajistit jim co nejlepší život." data-en="Animals live on the Meadow that we have taken into our care, and which find a safe home with us, plenty of food and a clean, warm place to rest. Each animal has its own story and we try to ensure the best possible life for them.">
-                        Na Louce žijí zvířata, která jsme přijali do péče, a která u nás nacházejí bezpečný domov, dostatek krmiva a čisté, teplé místo k odpočinku. Každé zvíře má svůj příběh a my se snažíme zajistit jim co nejlepší život.
-                    </p>
-                    <p data-cs="Věříme, že způsob, jakým žijeme a jak zacházíme se světem kolem nás, má hluboký dopad na naše blaho i na zdraví celé planety. Proto se snažíme žít vědomě, s úctou k tradičním hodnotám, ale i s otevřeností k novým, udržitelným přístupům." data-en="We believe that the way we live and how we treat the world around us has a profound impact on our well-being and the health of the entire planet. Therefore, we strive to live consciously, with respect for traditional values, but also with openness to new, sustainable approaches.">
-                        Věříme, že způsob, jakým žijeme a jak zacházíme se světem kolem nás, má hluboký dopad na naše blaho i na zdraví celé planety. Proto se snažíme žít vědomě, s úctou k tradičním hodnotám, ale i s otevřeností k novým, udržitelným přístupům.
-                    </p>
-                    <p data-cs="Naším posláním je nejen vytvářet takové prostředí pro nás samotné, ale také inspirovat ostatní, sdílet naše zkušenosti a znalosti, a tím přispívat k širší společenské transformaci směrem k harmoničtějšímu vztahu s naším prostředím." data-en="Our mission is not only to create such an environment for ourselves, but also to inspire others, share our experiences and knowledge, and thus contribute to a broader social transformation towards a more harmonious relationship with our environment.">
-                        Naším posláním je nejen vytvářet takové prostředí pro nás samotné, ale také inspirovat ostatní, sdílet naše zkušenosti a znalosti, a tím přispívat k širší společenské transformaci směrem k harmoničtějšímu vztahu s naším prostředím.
-                    </p>
-                </div>
-                <div class="about-image">
-                    <img data-src="assets/about-image.jpg" alt="Zvířata na louce" class="about-img" loading="lazy">
-                </div>
-            </div>
+            <h2 class="section-title" data-cs="O nás" data-en="About Us">O nás</h2>
+            <p data-cs="Jsme skupina nadšenců, kteří se rozhodli žít v souladu s přírodou a pečovat o zvířata. Naše Louka je domovem pro mnoho druhů zvířat, které zde nacházejí bezpečí a lásku. Snažíme se o soběstačnost a budujeme komunitu, která sdílí stejné hodnoty." data-en="We are a group of enthusiasts who decided to live in harmony with nature and care for animals. Our Meadow is home to many species of animals, where they find safety and love. We strive for self-sufficiency and build a community that shares the same values.">Jsme skupina nadšenců, kteří se rozhodli žít v souladu s přírodou a pečovat o zvířata. Naše Louka je domovem pro mnoho druhů zvířat, které zde nacházejí bezpečí a lásku. Snažíme se o soběstačnost a budujeme komunitu, která sdílí stejné hodnoty.</p>
         </div>
     </section>
 
     <!-- Values Section -->
-    <section class="values">
+    <section class="values" id="values">
         <div class="container">
             <h2 class="section-title" data-cs="Naše hodnoty" data-en="Our Values">Naše hodnoty</h2>
             <div class="values-grid">
@@ -130,67 +98,53 @@
         </div>
     </section>
 
-
-    <!-- Support Section -->
-    <section class="support">
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
         <div class="container">
-            <h2 class="section-title" data-cs="Jak se zapojit?" data-en="How to Get Involved?">Jak se zapojit?</h2>
-            <p class="support-text" data-cs="Existuje několik způsobů, jak nás můžete podpořit. Provoz Louky a péče o zvířata vyžaduje nemalé úsilí a finanční prostředky. Číslo našeho transparentního účtu je:" data-en="There are several ways you can support us. Running the Meadow and caring for animals requires considerable effort and financial resources. Our transparent account number is:">
-                Existuje několik způsobů, jak nás můžete podpořit. Provoz Louky a péče o zvířata vyžaduje nemalé úsilí a finanční prostředky. Číslo našeho transparentního účtu je:
-         
-            </p>
-            <div class="account-number"> 
-  <strong>
-    <a href="https://ib.fio.cz/ib/transparent?a=2002645872" 
-       target="_blank" 
-       rel="noopener noreferrer">
-       2002645872 / 2010 (Fio banka)
-    </a>
-  </strong>
-</div>
-
-            <div class="support-buttons">
-                <a href="virtualni-adopce.html" class="support-btn primary" data-cs="Virtuální adopce" data-en="Virtual Adoption">Virtuální adopce</a>
-                <a href="prispet-kryptem.html" class="support-btn" data-cs="Přispět kryptem" data-en="Donate with Crypto">Přispět kryptem</a>
-                <a href="https://www.darujme.cz/projekt/1208852" class="support-btn" data-cs="Přispět na darujme.cz" data-en="Donate on darujme.cz">Přispět na darujme.cz</a>
-                <a href="https://www.nakrmnas.cz/nech-me-rust" class="support-btn" data-cs="Nákup na nakrmnas.cz" data-en="Shop on nakrmnas.cz">Nákup na nakrmnas.cz</a>
-                <a href="https://clickandfeed.cz" class="support-btn" data-cs="Naplň misku zdarma" data-en="Fill the Bowl for Free">Naplň misku zdarma</a>
+            <h2 class="section-title" data-cs="Naše projekty" data-en="Our Projects">Naše projekty</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <img src="./img/project1.jpg" alt="Projekt 1">
+                    <h3 data-cs="Záchrana zvířat" data-en="Animal Rescue">Záchrana zvířat</h3>
+                    <p data-cs="Staráme se o opuštěná a zraněná zvířata a poskytujeme jim nový domov." data-en="We care for abandoned and injured animals and provide them with a new home.">Staráme se o opuštěná a zraněná zvířata a poskytujeme jim nový domov.</p>
+                </div>
+                <div class="project-card">
+                    <img src="./img/project2.jpg" alt="Projekt 2">
+                    <h3 data-cs="Udržitelné zemědělství" data-en="Sustainable Agriculture">Udržitelné zemědělství</h3>
+                    <p data-cs="Pěstujeme vlastní plodiny a chováme zvířata v souladu s přírodou." data-en="We grow our own crops and raise animals in harmony with nature.">Pěstujeme vlastní plodiny a chováme zvířata v souladu s přírodou.</p>
+                </div>
+                <div class="project-card">
+                    <img src="./img/project3.jpg" alt="Projekt 3">
+                    <h3 data-cs="Vzdělávací programy" data-en="Educational Programs">Vzdělávací programy</h3>
+                    <p data-cs="Pořádáme workshopy a přednášky o udržitelnosti a péči o zvířata." data-en="We organize workshops and lectures on sustainability and animal care.">Pořádáme workshopy a přednášky o udržitelnosti a péči o zvířata.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Social Media -->
-    <section class="social-section">
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title" data-cs="Sledujte nás" data-en="Follow Us">Sledujte nás</h2>
-            <div class="social-media large">
-                <a href="https://www.instagram.com/nech_me_rust" class="social-link">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
-                </a>
-                <a href="https://www.facebook.com/share/1BDFbAxfFf/" class="social-link">
-                    <i class="fab fa-facebook"></i>
-                    <span>Facebook</span>
-                </a>
-                <a href="mailto:info@nechmerust.org" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>Email</span>
-                </a>
-            </div>
+            <h2 class="section-title" data-cs="Kontaktujte nás" data-en="Contact Us">Kontaktujte nás</h2>
+            <p data-cs="Máte dotazy nebo se chcete zapojit? Napište nám!" data-en="Have questions or want to get involved? Write to us!">Máte dotazy nebo se chcete zapojit? Napište nám!</p>
+            <form class="contact-form">
+                <input type="text" placeholder="Jméno" data-cs-placeholder="Jméno" data-en-placeholder="Name">
+                <input type="email" placeholder="Email" data-cs-placeholder="Email" data-en-placeholder="Email">
+                <textarea placeholder="Zpráva" data-cs-placeholder="Zpráva" data-en-placeholder="Message"></textarea>
+                <button type="submit" class="btn" data-cs="Odeslat" data-en="Send">Odeslat</button>
+            </form>
         </div>
     </section>
-
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p data-cs="© 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům." data-en="© 2025 Nech mě růst z.s. All rights reserved. • Written with love for nature and animals.">
-                © 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům.
-            </p>
+            <p>&copy; 2023 Nechť mě Roste. Všechna práva vyhrazena.</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 
