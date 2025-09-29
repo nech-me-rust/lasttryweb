@@ -297,16 +297,20 @@ body {
 }
 
 .value-icon {
+.value-icon {
     width: 80px;
     height: 80px;
-    background: #2d5a3d;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 25px;
+    margin: 0 auto 1.5rem;
+}
+
+.value-icon i {
+    font-size: 2.5rem;
     color: white;
-    font-size: 2rem;
 }
 
 .value-card h3 {
