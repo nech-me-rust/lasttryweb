@@ -456,4 +456,3 @@ if ('serviceWorker' in navigator) {
 
 // Export for use in other scripts
 window.websiteManager = websiteManager;
-
