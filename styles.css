@@ -1212,4 +1212,37 @@ textarea:focus {
         margin-bottom: 20pt;
     }
     }
-        
+     .account-number {
+  margin: 20px 0;
+}
+
+.account-link {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.account-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.account-digits {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.bank-name {
+  font-size: 13px;
+  opacity: 0.9;
+  font-weight: 400;
+}   
