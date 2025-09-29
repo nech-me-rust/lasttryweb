@@ -231,10 +231,20 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap; /* Přidáno pro lepší responzivitu */
+        }
+
+        .event-buttons .register-btn {
+            flex: 1; /* Tlačítka budou mít stejnou šířku */
+            min-width: 140px; /* Minimální šířka tlačítka */
         }
 
         .facebook-btn {
             background-color: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
 
         .facebook-btn:hover {
@@ -317,11 +327,17 @@
             margin-bottom: 10px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
             .event-buttons {
                 flex-direction: column;
             }
             
+            .event-buttons .register-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
             .modal-content {
                 margin: 10% auto;
                 padding: 20px;
@@ -329,4 +345,4 @@
         }
     </style>
 </body>
-    </html>
+    </html>    
