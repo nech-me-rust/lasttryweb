@@ -107,7 +107,7 @@ class WebsiteManager {
         // Update all elements with data attributes
         const elements = document.querySelectorAll('[data-cs][data-en]');
         elements.forEach(element => {
-            const text = element.getAttribute(data-${lang});
+            const text = element.getAttribute(`data-${lang}`);
             if (text) {
                 if (element.tagName === 'INPUT' && element.type === 'submit') {
                     element.value = text;
