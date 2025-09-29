@@ -296,7 +296,6 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-
 .value-icon {
     width: 80px;
     height: 80px;
@@ -323,7 +322,7 @@ body {
 .value-card p {
     color: #666;
     line-height: 1.6;
-}
+    }
 
 /* Support Section */
 .support {
