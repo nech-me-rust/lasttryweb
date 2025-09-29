@@ -85,14 +85,54 @@
                             <i class="fas fa-users"></i>
                             <span data-cs="Volných míst: 20/20" data-en="Available spots: 20/20">Volných míst: 20/20</span>
                         </div>
-                        <button class="register-btn" onclick="openRegistrationModal('den-otevrenych-dveri')" data-cs="Registrovat se" data-en="Register">
-                            Registrovat se
-                        </button>
+                        <div class="event-buttons">
+                            <button class="register-btn" onclick="openRegistrationModal('Společná procházka', '2. listopadu')" data-cs="Registrovat se" data-en="Register">
+                                Registrovat se
+                            </button>
+                            <button class="register-btn facebook-btn" onclick="window.open('https://www.facebook.com/events/YOUR_EVENT_ID', '_blank')" data-cs="Facebook událost" data-en="Facebook Event">
+                                <i class="fab fa-facebook"></i> Facebook událost
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegistrationModal()">&times;</span>
+            <h2 data-cs="Registrace na událost" data-en="Event Registration">Registrace na událost</h2>
+            <p id="eventDetails" class="event-details"></p>
+            
+            <form id="registrationForm" onsubmit="submitRegistration(event)">
+                <div class="form-group">
+                    <label for="name" data-cs="Jméno *" data-en="Name *">Jméno *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" data-cs="Email *" data-en="Email *">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" data-cs="Zpráva (nepovinné)" data-en="Message (optional)">Zpráva (nepovinné)</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="register-btn" data-cs="Odeslat registraci" data-en="Submit Registration">
+                    Odeslat registraci
+                </button>
+            </form>
+            
+            <div id="successMessage" class="success-message" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <p data-cs="Registrace byla úspěšně odeslána!" data-en="Registration successfully sent!">Registrace byla úspěšně odeslána!</p>
+            </div>
+        </div>
+    </div>
 
      <!-- Social Media -->
     <section class="social-section">
@@ -126,6 +166,167 @@
     </footer>
 
     <script src="script.js"></script>
-</body>
-</html>
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // Nahraďte svým EmailJS public key
+        })();
 
+        // Modal functions
+        function openRegistrationModal(eventName, eventDate) {
+            const modal = document.getElementById('registrationModal');
+            const eventDetails = document.getElementById('eventDetails');
+            eventDetails.textContent = `${eventName} - ${eventDate}`;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('registrationForm').reset();
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Submit registration
+        function submitRegistration(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value,
+                event: document.getElementById('eventDetails').textContent,
+                to_email: 'info@nechmerust.org'
+            };
+
+            // Send email using EmailJS
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData)
+                .then(function(response) {
+                    document.getElementById('registrationForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    setTimeout(() => {
+                        closeRegistrationModal();
+                        document.getElementById('registrationForm').style.display = 'block';
+                    }, 3000);
+                }, function(error) {
+                    alert('Omlouváme se, registrace se nezdařila. Zkuste to prosím znovu.');
+                    console.error('EmailJS error:', error);
+                });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('registrationModal');
+            if (event.target == modal) {
+                closeRegistrationModal();
+            }
+        }
+    </script>
+
+    <style>
+        /* Event buttons styling */
+        .event-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .facebook-btn {
+            background-color: #1877f2;
+        }
+
+        .facebook-btn:hover {
+            background-color: #166fe5;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .event-details {
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .success-message {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 18px;
+        }
+
+        .success-message i {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .event-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</body>
+                    </html>
