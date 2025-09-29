@@ -106,7 +106,7 @@
             <h2 data-cs="Registrace na událost" data-en="Event Registration">Registrace na událost</h2>
             <p id="eventDetails" class="event-details"></p>
             
-            <form id="registrationForm" onsubmit="submitRegistration(event)">
+            <form id="registrationForm">
                 <div class="form-group">
                     <label for="name" data-cs="Jméno *" data-en="Name *">Jméno *</label>
                     <input type="text" id="name" name="name" required>
@@ -122,8 +122,11 @@
                     <textarea id="message" name="message" rows="4"></textarea>
                 </div>
                 
-                <button type="submit" class="register-btn" data-cs="Odeslat registraci" data-en="Submit Registration">
-                    Odeslat registraci
+                <button type="submit" class="register-btn submit-btn" data-cs="Odeslat registraci" data-en="Submit Registration">
+                    <span class="btn-text">Odeslat registraci</span>
+                    <span class="btn-loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Odesílání...
+                    </span>
                 </button>
             </form>
             
@@ -132,6 +135,12 @@
                 <p data-cs="Registrace byla úspěšně odeslána!" data-en="Registration successfully sent!">Registrace byla úspěšně odeslána!</p>
             </div>
         </div>
+    </div>
+
+    <!-- Confirmation Toast -->
+    <div id="confirmationToast" class="confirmation-toast">
+        <i class="fas fa-check-circle"></i>
+        <span>Registrace byla úspěšně odeslána!</span>
     </div>
 
      <!-- Social Media -->
@@ -168,9 +177,7 @@
     <script src="script.js"></script>
     <script>
         // Initialize EmailJS
-        (function() {
-            emailjs.init("I5YP3u4sQzRLRFTYj"); // Opraveno - přidány uvozovky
-        })();
+        emailjs.init("I5YP3u4sQzRLRFTYj");
 
         // Modal functions
         function openRegistrationModal(eventName, eventDate) {
@@ -187,34 +194,63 @@
             document.body.style.overflow = 'auto';
             document.getElementById('registrationForm').reset();
             document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('registrationForm').style.display = 'block';
         }
 
-        // Submit registration
-        function submitRegistration(event) {
-            event.preventDefault();
+        function showConfirmationToast() {
+            const toast = document.getElementById('confirmationToast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                message: document.getElementById('message').value,
-                event: document.getElementById('eventDetails').textContent,
+            const submitBtn = document.querySelector('.submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                message: document.getElementById('message').value || 'Bez zprávy',
+                event_name: document.getElementById('eventDetails').textContent,
                 to_email: 'info@nechmerust.org'
             };
 
-            // Send email using EmailJS
-            emailjs.send("service_5hqwmpm", "template_1plexqr", formData) // Opraveno - přidány uvozovky
+            emailjs.send("service_5hqwmpm", "template_1plexqr", templateParams)
                 .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Hide form and show success message in modal
                     document.getElementById('registrationForm').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
+                    
+                    // Close modal after 2 seconds
                     setTimeout(() => {
                         closeRegistrationModal();
-                        document.getElementById('registrationForm').style.display = 'block';
-                    }, 3000);
+                        // Show confirmation toast
+                        showConfirmationToast();
+                    }, 2000);
+                    
                 }, function(error) {
-                    alert('Omlouváme se, registrace se nezdařila. Zkuste to prosím znovu.');
-                    console.error('EmailJS error:', error);
+                    console.error('FAILED...', error);
+                    alert('Omlouváme se, registrace se nezdařila. Zkuste to prosím znovu nebo nás kontaktujte přímo na info@nechmerust.org');
+                    
+                    // Reset button state
+                    btnText.style.display = 'inline-block';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
                 });
-        }
+        });
 
         // Close modal when clicking outside
         window.onclick = function(event) {
@@ -231,12 +267,12 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
-            flex-wrap: wrap; /* Přidáno pro lepší responzivitu */
+            flex-wrap: wrap;
         }
 
         .event-buttons .register-btn {
-            flex: 1; /* Tlačítka budou mít stejnou šířku */
-            min-width: 140px; /* Minimální šířka tlačítka */
+            flex: 1;
+            min-width: 140px;
         }
 
         .facebook-btn {
