@@ -1221,7 +1221,7 @@ textarea:focus {
   flex-direction: column;
   gap: 4px;
   padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #5bb04d 0%, #2d5a3d 100%);
   color: white;
   text-decoration: none;
   border-radius: 8px;
