@@ -169,7 +169,7 @@
     <script>
         // Initialize EmailJS
         (function() {
-            emailjs.init(I5YP3u4sQzRLRFTYj); // Nahraďte svým EmailJS public key
+            emailjs.init("I5YP3u4sQzRLRFTYj"); // Opraveno - přidány uvozovky
         })();
 
         // Modal functions
@@ -202,7 +202,7 @@
             };
 
             // Send email using EmailJS
-            emailjs.send(service_5hqwmpm, template_1plexqr, formData)
+            emailjs.send("service_5hqwmpm", "template_1plexqr", formData) // Opraveno - přidány uvozovky
                 .then(function(response) {
                     document.getElementById('registrationForm').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
@@ -329,4 +329,4 @@
         }
     </style>
 </body>
-                    </html>
+    </html>
