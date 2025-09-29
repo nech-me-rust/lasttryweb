@@ -176,8 +176,8 @@
 
     <script src="script.js"></script>
     <script>
-        // Initialize EmailJS
-        emailjs.init("I5YP3u4sQzRLRFTYj");
+        // Initialize EmailJS (v4 syntax)
+        emailjs.init({ publicKey: "I5YP3u4sQzRLRFTYj" });
 
         // Modal functions
         function openRegistrationModal(eventName, eventDate) {
@@ -229,23 +229,21 @@
             emailjs.send("service_5hqwmpm", "template_1plexqr", templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
-                    
-                    // Hide form and show success message in modal
-                    document.getElementById('registrationForm').style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
-                    
-                    // Close modal after 2 seconds
-                    setTimeout(() => {
-                        closeRegistrationModal();
-                        // Show confirmation toast
-                        showConfirmationToast();
-                    }, 2000);
+
+                    // Reset button state
+                    btnText.style.display = 'inline-block';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+
+                    // Ihned zavřít modal a ukázat potvrzovací toast
+                    closeRegistrationModal();
+                    showConfirmationToast();
                     
                 }, function(error) {
                     console.error('FAILED...', error);
                     alert('Omlouváme se, registrace se nezdařila. Zkuste to prosím znovu nebo nás kontaktujte přímo na info@nechmerust.org');
                     
-                    // Reset button state
+                    // Reset button state po chybě
                     btnText.style.display = 'inline-block';
                     btnLoading.style.display = 'none';
                     submitBtn.disabled = false;
@@ -379,6 +377,35 @@
                 padding: 20px;
             }
         }
+
+        /* Confirmation toast */
+        .confirmation-toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #4CAF50;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: opacity .25s ease, transform .25s ease;
+            z-index: 2000; /* nad overlayem */
+        }
+
+        .confirmation-toast i {
+            font-size: 18px;
+        }
+
+        .confirmation-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </body>
-    </html>    
+</html>
