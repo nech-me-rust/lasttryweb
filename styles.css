@@ -1318,3 +1318,56 @@ textarea:focus {
         font-size: 14px;
     }
     }
+/* Wrapper pro centrování čísla účtu */
+.account-number-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+/* Upravené styly pro číslo účtu */
+.account-number {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.account-link {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.25rem; /* Zvětšení písma */
+}
+
+.account-link:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.account-digits {
+    font-size: 1.75rem; /* Větší čísla účtu */
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.bank-name {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* Poznámka pod číslem účtu */
+.account-note {
+    margin-top: 1rem;
+    color: #6c757d;
+    font-style: italic;
+}
