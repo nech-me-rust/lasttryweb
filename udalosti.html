@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nech mě růst - Události</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- EmailJS v4 (defer, aby se načetl před DOMContentLoaded) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.png" alt="Nech mě růst" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link" data-cs="Domů" data-en="Home">Domů</a>
+                </li>
+                <li class="nav-item">
+                    <a href="zvireci-obyvatele.html" class="nav-link" data-cs="Zvířecí obyvatelé" data-en="Animal Residents">Zvířecí obyvatelé</a>
+                </li>
+                <li class="nav-item">
+                    <a href="virtualni-adopce.html" class="nav-link" data-cs="Virtuální adopce" data-en="Virtual Adoption">Virtuální adopce</a>
+                </li>
+                <li class="nav-item">
+                    <a href="udalosti.html" class="nav-link active" data-cs="Události" data-en="Events">Události</a>
+                </li>
+                <li class="nav-item">
+                    <a href="kontakt.html" class="nav-link" data-cs="Kontakt" data-en="Contact">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <a href="prispet-kryptem.html" class="nav-link" data-cs="Přispět kryptem" data-en="Donate with Crypto">Přispět kryptem</a>
+                </li>
+                <li class="nav-item language-switcher">
+                    <button id="lang-toggle" class="lang-btn">
+                        <span class="lang-text">EN</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero events-hero">
+        <div class="hero-content">
+            <h1 class="page-title" data-cs="Události" data-en="Events">Události</h1>
+            <p class="page-description" data-cs="Zúčastněte se některé z událostí a poznejte život na Louce" data-en="Attend one of our events and experience our way of life">Zúčastněte se některé z událostí a poznejte život na Louce</p>
+        </div>
+        <div class="hero-image">
+            <img data-src="assets/hero-image.webp" alt="Události" class="hero-bg" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="upcoming-events">
+        <div class="container">
+            <h2 class="section-title" data-cs="Nadcházející události" data-en="Upcoming Events">Nadcházející události</h2>
+            
+        <div class="events-grid" id="events-list">
+            <!-- Sample Events - In real implementation, these would be loaded from Google Calendar API -->
+            <div class="event-card">
+                <div class="event-date">
+                    <div class="event-day">2</div>
+                    <div class="event-month" data-cs="Listopad" data-en="November">Listopad</div>
+                </div>
+                <div class="event-info">
+                    <h3 class="event-title" data-cs="Společná procházka" data-en="walking with animals">Společná procházka</h3>
+                    <p class="event-time">
+                        <i class="fas fa-clock"></i>
+                        <span>10:00 - 18:00</span>
+                    </p>
+                    <p class="event-description" data-cs="Přijďte se podívat na naši Louky, poznat zvířata a dozvědět se více o našem způsobu života." data-en="Come visit our Meadow, meet the animals and learn more about our way of life.">
+                        Přijďte se podívat na naši Louku, poznat zvířata a dozvědět se více o našem způsobu života.
+                    </p>
+                    <div class="event-capacity">
+                        <i class="fas fa-users"></i>
+                        <span data-cs="Volných míst: 20/20" data-en="Available spots: 20/20">Volných míst: 20/20</span>
+                    </div>
+                    <div class="event-buttons">
+                        <button class="register-btn" onclick="openRegistrationModal('Společná procházka', '2. listopadu')" data-cs="Registrovat se" data-en="Register">
+                            Registrovat se
+                        </button>
+                        <button class="register-btn facebook-btn" onclick="window.open('https://www.facebook.com/events/YOUR_EVENT_ID', '_blank')" data-cs="Facebook událost" data-en="Facebook Event">
+                            <i class="fab fa-facebook"></i> Facebook událost
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegistrationModal()">&times;</span>
+            <h2 data-cs="Registrace na událost" data-en="Event Registration">Registrace na událost</h2>
+            <p id="eventDetails" class="event-details"></p>
+            
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="name" data-cs="Jméno *" data-en="Name *">Jméno *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" data-cs="Email *" data-en="Email *">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" data-cs="Zpráva (nepovinné)" data-en="Message (optional)">Zpráva (nepovinné)</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="register-btn submit-btn" data-cs="Odeslat registraci" data-en="Submit Registration">
+                    <span class="btn-text">Odeslat registraci</span>
+                    <span class="btn-loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Odesílání...
+                    </span>
+                </button>
+            </form>
+            
+            <div id="successMessage" class="success-message" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <p data-cs="Registrace byla úspěšně odeslána!" data-en="Registration successfully sent!">Registrace byla úspěšně odeslána!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Toast -->
+    <div id="confirmationToast" class="confirmation-toast" aria-live="polite">
+        <i class="fas fa-check-circle"></i>
+        <span>Registrace byla úspěšně odeslána!</span>
+    </div>
+
+     <!-- Social Media -->
+    <section class="social-section">
+        <div class="container">
+            <h2 class="section-title" data-cs="Sledujte nás" data-en="Follow Us">Sledujte nás</h2>
+            <div class="social-media large">
+                <a href="https://www.instagram.com/nech_me_rust" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.facebook.com/share/1BDFbAxfFf/" class="social-link">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="mailto:info@nechmerust.org" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-cs="© 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům." data-en="© 2025 Nech mě růst z.s. All rights reserved. • Written with love for nature and animals.">
+                © 2025 Nech mě růst z.s. Všechna práva vyhrazena. • Napsáno s láskou k přírodě a zvířatům.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Váš existující skript (pokud používáte) -->
+    <script src="script.js"></script>
+
+    <!-- Registrace + EmailJS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Bezpečná inicializace EmailJS (v4)
+            if (window.emailjs && typeof emailjs.init === 'function') {
+                try {
+                    emailjs.init({ publicKey: "I5YP3u4sQzRLRFTYj" });
+                } catch (e) {
+                    console.error('EmailJS init error:', e);
+                }
+            } else {
+                console.error('EmailJS knihovna nebyla načtena.');
+            }
+
+            // Exponujeme funkce pro tlačítka v HTML
+            window.openRegistrationModal = function (eventName, eventDate) {
+                const modal = document.getElementById('registrationModal');
+                const eventDetails = document.getElementById('eventDetails');
+                eventDetails.textContent = `${eventName} - ${eventDate}`;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeRegistrationModal = function () {
+                const modal = document.getElementById('registrationModal');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                const form = document.getElementById('registrationForm');
+                if (form) form.reset();
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('registrationForm').style.display = 'block';
+            };
+
+            function showToast(message, type = 'success') {
+                const toast = document.getElementById('confirmationToast');
+                const textEl = toast.querySelector('span');
+                textEl.textContent = message;
+                toast.classList.remove('error', 'success');
+                toast.classList.add(type === 'error' ? 'error' : 'success');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // Odeslání formuláře
+            const form = document.getElementById('registrationForm');
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const submitBtn = form.querySelector('.submit-btn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnLoading = submitBtn.querySelector('.btn-loading');
+
+                // Loading stav
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline-block';
+                submitBtn.disabled = true;
+
+                const templateParams = {
+                    from_name: document.getElementById('name').value.trim(),
+                    from_email: document.getElementById('email').value.trim(),
+                    message: (document.getElementById('message').value || 'Bez zprávy').trim(),
+                    event_name: document.getElementById('eventDetails').textContent,
+                    to_email: 'info@nechmerust.org'
+                };
+
+                // Zavřít modal ihned po odeslání (po kliknutí)
+                closeRegistrationModal();
+
+                // Knihovna k dispozici?
+                if (!window.emailjs || typeof emailjs.send !== 'function') {
+                    console.error('EmailJS není připraven, zkontrolujte načtení knihovny.');
+                    showToast('Nelze odeslat registraci (EmailJS není načten).', 'error');
+                    btnText.style.display = 'inline-block';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                try {
+                    const response = await emailjs.send("service_5hqwmpm", "template_1plexqr", templateParams);
+                    console.log('SUCCESS!', response.status, response.text);
+                    showToast('Registrace byla úspěšně odeslána!', 'success');
+                } catch (error) {
+                    console.error('FAILED...', error);
+                    showToast('Odeslání se nepodařilo. Zkuste to znovu nebo napište na info@nechmerust.org', 'error');
+                } finally {
+                    btnText.style.display = 'inline-block';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Zavření modalu kliknutím mimo obsah
+            window.addEventListener('click', function (event) {
+                const modal = document.getElementById('registrationModal');
+                if (event.target === modal) {
+                    closeRegistrationModal();
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Event buttons styling */
+        .event-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .event-buttons .register-btn {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .facebook-btn {
+            background-color: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .facebook-btn:hover {
+            background-color: #166fe5;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .event-details {
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .success-message {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 18px;
+        }
+
+        .success-message i {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .event-buttons {
+                flex-direction: column;
+            }
+            
+            .event-buttons .register-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+            }
+        }
+
+        /* Confirmation toast */
+        .confirmation-toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #4CAF50; /* success */
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: opacity .25s ease, transform .25s ease;
+            z-index: 2000; /* nad overlayem */
+        }
+
+        .confirmation-toast i {
+            font-size: 18px;
+        }
+
+        .confirmation-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .confirmation-toast.error {
+            background: #e53935; /* error stav */
+        }
+
+        .confirmation-toast.success {
+            background: #4CAF50;
+        }
+    </style>
+</body>
+                        </html>
