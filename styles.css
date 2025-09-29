@@ -1249,3 +1249,72 @@ textarea:focus {
   opacity: 0.9;
   font-weight: 400;
 }   
+/* Video sekce */
+.video-container-section {
+    padding: 80px 0;
+    background-color: #1a1a1a;
+}
+
+.video-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Video frame */
+.video-frame {
+    position: relative;
+    background-color: #0d0d0d;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 2px solid #2a2a2a;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.video-frame:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 15px 40px rgba(76, 175, 80, 0.2);
+    transform: translateY(-2px);
+}
+
+/* HTML5 video element */
+.video-frame video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Vlastní styly pro video controls */
+.video-frame video::-webkit-media-controls-panel {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.video-frame video::-webkit-media-controls-play-button,
+.video-frame video::-webkit-media-controls-volume-slider {
+    filter: invert(1);
+}
+
+.video-description {
+    text-align: center;
+    margin-top: 20px;
+    color: #cccccc;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Responzivní design */
+@media (max-width: 768px) {
+    .video-wrapper {
+        padding: 10px;
+    }
+    
+    .video-frame {
+        border-radius: 8px;
+    }
+    
+    .video-description {
+        font-size: 14px;
+    }
+    }
