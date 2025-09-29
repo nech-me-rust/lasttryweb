@@ -107,7 +107,7 @@ class WebsiteManager {
         // Update all elements with data attributes
         const elements = document.querySelectorAll('[data-cs][data-en]');
         elements.forEach(element => {
-            const text = element.getAttribute(`data-${lang}`);
+            const text = element.getAttribute(data-${lang});
             if (text) {
                 if (element.tagName === 'INPUT' && element.type === 'submit') {
                     element.value = text;
@@ -236,7 +236,7 @@ class WebsiteManager {
             
             heroImages.forEach(img => {
                 const speed = 0.5;
-                img.style.transform = `translateY(${scrolled * speed}px)`;
+                img.style.transform = translateY(${scrolled * speed}px);
             });
         });
         
@@ -256,7 +256,7 @@ class WebsiteManager {
     // Utility methods
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
+        notification.className = notification notification-${type};
         notification.textContent = message;
         
         notification.style.cssText = `
@@ -330,7 +330,7 @@ class ContactFormManager {
         }
         
         // Create email content
-        const subject = encodeURIComponent(`Kontakt z webu: ${data.subject}`);
+        const subject = encodeURIComponent(Kontakt z webu: ${data.subject});
         const body = encodeURIComponent(`
 Dobrý den,
 
@@ -347,7 +347,7 @@ ${data.name}
         `);
         
         // Open email client
-        window.location.href = `mailto:info@nechmerust.org?subject=${subject}&body=${body}`;
+        window.location.href = mailto:info@nechmerust.org?subject=${subject}&body=${body};
         
         websiteManager.showNotification('Zpráva byla připravena k odeslání!', 'success');
         
