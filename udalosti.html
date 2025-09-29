@@ -169,7 +169,7 @@
     <script>
         // Initialize EmailJS
         (function() {
-            emailjs.init("YOUR_PUBLIC_KEY"); // Nahraďte svým EmailJS public key
+            emailjs.init(I5YP3u4sQzRLRFTYj); // Nahraďte svým EmailJS public key
         })();
 
         // Modal functions
@@ -202,7 +202,7 @@
             };
 
             // Send email using EmailJS
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData)
+            emailjs.send(service_5hqwmpm, template_1plexqr, formData)
                 .then(function(response) {
                     document.getElementById('registrationForm').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
