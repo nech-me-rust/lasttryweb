@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- EmailJS v4 (defer, aby se načetl před DOMContentLoaded) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -232,7 +232,7 @@
                 const btnText = submitBtn.querySelector('.btn-text');
                 const btnLoading = submitBtn.querySelector('.btn-loading');
 
-                // Loading stav
+                // Zobrazit stav načítání
                 btnText.style.display = 'none';
                 btnLoading.style.display = 'inline-block';
                 submitBtn.disabled = true;
@@ -245,10 +245,7 @@
                     to_email: 'info@nechmerust.org'
                 };
 
-                // Zavřít modal ihned po odeslání (po kliknutí)
-                closeRegistrationModal();
-
-                // Knihovna k dispozici?
+                // Zkontrolovat, zda je knihovna k dispozici
                 if (!window.emailjs || typeof emailjs.send !== 'function') {
                     console.error('EmailJS není připraven, zkontrolujte načtení knihovny.');
                     showToast('Nelze odeslat registraci (EmailJS není načten).', 'error');
@@ -261,11 +258,16 @@
                 try {
                     const response = await emailjs.send("service_5hqwmpm", "template_1plexqr", templateParams);
                     console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Po úspěchu zavřít okno a zobrazit potvrzení
+                    closeRegistrationModal();
                     showToast('Registrace byla úspěšně odeslána!', 'success');
+
                 } catch (error) {
                     console.error('FAILED...', error);
                     showToast('Odeslání se nepodařilo. Zkuste to znovu nebo napište na info@nechmerust.org', 'error');
                 } finally {
+                    // Vždy obnovit stav tlačítka
                     btnText.style.display = 'inline-block';
                     btnLoading.style.display = 'none';
                     submitBtn.disabled = false;
@@ -439,4 +441,5 @@
         }
     </style>
 </body>
-                        </html>
+</html>
+
