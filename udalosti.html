@@ -174,10 +174,174 @@
         </div>
     </footer>
 
-    <!-- Váš existující skript (pokud používáte) -->
+    <!-- Scripts -->
     <script src="script.js"></script>
+    
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- EmailJS & Modal Scripts -->
+    <script type="text/javascript">
+        // ========================================
+        // EMAILJS INICIALIZACE
+        // ========================================
+        (function() {
+            emailjs.init({
+                publicKey: "YOUR_PUBLIC_KEY" // ⚠️ NAHRAĎTE svým Public Key z EmailJS
+            });
+        })();
 
-     
+        // ========================================
+        // MODAL FUNKCE
+        // ========================================
+        
+        // Otevření modalu
+        function openRegistrationModal(eventName = '', eventDate = '') {
+            const modal = document.getElementById('registrationModal');
+            const eventDetails = document.getElementById('eventDetails');
+            
+            // Nastavení detailů události
+            if (eventName && eventDate) {
+                eventDetails.textContent = `Registrace na: ${eventName} - ${eventDate}`;
+            } else if (eventName) {
+                eventDetails.textContent = `Registrace na: ${eventName}`;
+            } else {
+                eventDetails.textContent = 'Vyplňte prosím registrační formulář';
+            }
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Animace zobrazení
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 10);
+        }
+
+        // Zavření modalu
+        function closeRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.style.opacity = '0';
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // Reset formuláře
+                document.getElementById('registrationForm').reset();
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('registrationForm').style.display = 'block';
+                
+                const btnText = document.querySelector('.btn-text');
+                const btnLoading = document.querySelector('.btn-loading');
+                const submitBtn = document.querySelector('.submit-btn');
+                
+                if (btnText) btnText.style.display = 'inline';
+                if (btnLoading) btnLoading.style.display = 'none';
+                if (submitBtn) submitBtn.disabled = false;
+            }, 300);
+        }
+
+        // Zavření modalu kliknutím mimo obsah
+        window.onclick = function(event) {
+            const modal = document.getElementById('registrationModal');
+            if (event.target === modal) {
+                closeRegistrationModal();
+            }
+        }
+
+        // Zavření modalu klávesou ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('registrationModal');
+                if (modal.style.display === 'block') {
+                    closeRegistrationModal();
+                }
+            }
+        });
+
+        // ========================================
+        // FORMULÁŘ - ODESLÁNÍ
+        // ========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const submitBtn = this.querySelector('.submit-btn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnLoading = submitBtn.querySelector('.btn-loading');
+                
+                // Zobrazení loading stavu
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                submitBtn.disabled = true;
+                
+                // Přidání informace o události do formuláře
+                const eventInfo = document.getElementById('eventDetails').textContent;
+                
+                // Vytvoření skrytého pole pro událost (pokud neexistuje)
+                let eventField = this.querySelector('input[name="event_name"]');
+                if (!eventField) {
+                    eventField = document.createElement('input');
+                    eventField.type = 'hidden';
+                    eventField.name = 'event_name';
+                    this.appendChild(eventField);
+                }
+                eventField.value = eventInfo;
+                
+                // Odeslání přes EmailJS
+                emailjs.sendForm('contact_service', 'contact_form', this) // ⚠️ NAHRAĎTE 'contact_service' a 'contact_form' svými ID
+                    .then(function() {
+                        console.log('SUCCESS! Registrace odeslána.');
+                        
+                        // Skrytí formuláře a zobrazení úspěšné zprávy
+                        document.getElementById('registrationForm').style.display = 'none';
+                        document.getElementById('successMessage').style.display = 'block';
+                        
+                        // Zobrazení toast notifikace
+                        showToast('Registrace byla úspěšně odeslána!', 'success');
+                        
+                        // Automatické zavření modalu po 3 sekundách
+                        setTimeout(function() {
+                            closeRegistrationModal();
+                        }, 3000);
+                        
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        
+                        // Zobrazení chybové zprávy
+                        showToast('Nastala chyba při odesílání. Zkuste to prosím znovu.', 'error');
+                        
+                        // Obnovení tlačítka
+                        btnText.style.display = 'inline';
+                        btnLoading.style.display = 'none';
+                        submitBtn.disabled = false;
+                    });
+            });
+        });
+
+        // ========================================
+        // TOAST NOTIFIKACE
+        // ========================================
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('confirmationToast');
+            const toastText = toast.querySelector('span');
+            
+            // Nastavení textu a typu
+            toastText.textContent = message;
+            toast.className = 'confirmation-toast ' + type;
+            
+            // Zobrazení
+            toast.classList.add('show');
+            
+            // Skrytí po 3 sekundách
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
 
     <style>
         /* Event buttons styling */
@@ -216,6 +380,8 @@
             height: 100%;
             overflow: auto;
             background-color: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .modal-content {
@@ -225,8 +391,22 @@
             border: 1px solid #888;
             width: 90%;
             max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
             border-radius: 10px;
             position: relative;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .close {
@@ -238,6 +418,8 @@
             position: absolute;
             right: 20px;
             top: 15px;
+            line-height: 1;
+            transition: color 0.3s;
         }
 
         .close:hover,
@@ -249,6 +431,9 @@
             font-weight: 600;
             color: #4CAF50;
             margin-bottom: 20px;
+            background: #f0f8f0;
+            padding: 12px;
+            border-radius: 5px;
         }
 
         .form-group {
@@ -257,28 +442,61 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 500;
+            color: #333;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            position: relative;
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
         .success-message {
             text-align: center;
             color: #4CAF50;
-            font-size: 18px;
+            padding: 20px;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
         }
 
         .success-message i {
             font-size: 48px;
             margin-bottom: 10px;
+            display: block;
+        }
+
+        .success-message p {
+            font-size: 16px;
+            margin: 0;
         }
 
         @media (max-width: 480px) {
@@ -303,32 +521,33 @@
             position: fixed;
             right: 20px;
             bottom: 20px;
-            background: #4CAF50; /* success */
+            background: #4CAF50;
             color: #fff;
-            padding: 12px 16px;
+            padding: 15px 20px;
             border-radius: 8px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             display: flex;
             align-items: center;
             gap: 10px;
             opacity: 0;
-            transform: translateY(16px);
+            transform: translateY(100px);
             pointer-events: none;
-            transition: opacity .25s ease, transform .25s ease;
-            z-index: 2000; /* nad overlayem */
+            transition: all 0.4s ease;
+            z-index: 2000;
         }
 
         .confirmation-toast i {
-            font-size: 18px;
+            font-size: 20px;
         }
 
         .confirmation-toast.show {
             opacity: 1;
             transform: translateY(0);
+            pointer-events: auto;
         }
 
         .confirmation-toast.error {
-            background: #e53935; /* error stav */
+            background: #e53935;
         }
 
         .confirmation-toast.success {
@@ -336,4 +555,4 @@
         }
     </style>
 </body>
-                        </html>
+    </html>
